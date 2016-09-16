@@ -1,4 +1,4 @@
-name := "s-util-math"
+name := "s-util-std"
 
 import sbt._
 import Keys._
@@ -6,9 +6,10 @@ import SharedBuild._
 
 com.typesafe.sbt.SbtScalariform.defaultScalariformSettings
 
-addCompilerPlugin(scalaMacros)
+//
+// NO compile libraryDependencies !!! 
+//
 
-libraryDependencies ++= mathDeps 
 libraryDependencies ++= testDeps
 
 //
