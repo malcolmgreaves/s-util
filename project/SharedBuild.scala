@@ -6,9 +6,7 @@ object SharedBuild {
   // // // // // // // //
   // //   Versions  // //
   // // // // // // // //
-
-  lazy val breezeV = "0.12"
-  lazy val spireV  = "0.11.0"
+  
   lazy val scalazV = "7.2.6"
   lazy val macroV  = "2.1.0"
 
@@ -21,13 +19,6 @@ object SharedBuild {
 
   lazy val fpDeps = Seq(
     "org.scalaz" %% "scalaz-core" % scalazV
-  )
-
-  lazy val mathDeps = Seq(
-    "org.spire-math" %% "spire"  % spireV
-    ,"org.scalanlp"  %% "breeze" % breezeV
-    // TODO: Will this use of Provided work? Or just do doc + discipline?
-    // "org.scalanlp"   %% "breeze-natives" % breezeV % Provided
   )
 
   lazy val testDeps = Seq(
