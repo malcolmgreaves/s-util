@@ -15,7 +15,7 @@ object Types {
   object Size {
     /** Size constructor: throws Exception if input is negative. */
     def apply(x: Int): Size = {
-      if(x >= 0) Tag[Int,T](x)
+      if (x >= 0) Tag[Int, T](x)
       else throw new IllegalArgumentException(s"Size must be non-negative, not $x")
     }
     /** Size value accessor. */

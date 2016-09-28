@@ -1,7 +1,7 @@
 package sutils.std
 
 object MathHelpers {
-  
+
   val defaultDoubleEqualityTol = 1e-8
 
   @inline def areEqual(

@@ -1,7 +1,7 @@
 package sutils.std
 
 object StringHelpers {
-  
+
   def split(
     clean: String => String,
     pass: String => Boolean,
@@ -22,14 +22,14 @@ object StringHelpers {
       .filter(pass)
       .toSeq
 
-  def split(regexSeperator: String)(rawInput: String): Seq[String] = 
+  def split(regexSeperator: String)(rawInput: String): Seq[String] =
     split(
       identity,
       _ => true,
       trimRawInput = true
     )(regexSeperator)(rawInput)
 
-  def lcaseSpaceSplit(rawInput: String): Seq[String] = 
+  def lcaseSpaceSplit(rawInput: String): Seq[String] =
     split(
       _.toLowerCase,
       _ => true,
@@ -38,7 +38,7 @@ object StringHelpers {
 
   type Combiner = Seq[String] => String
 
-  def combine(rawSeperator: String): Combiner = 
+  def combine(rawSeperator: String): Combiner =
     _.mkString(rawSeperator)
 
   lazy val tabCombine: Combiner = combine("\t")
