@@ -9,105 +9,82 @@ import scalaz.{ -\/, \/, \/- }
 
 class ImplicitOpsTest extends FunSuite {
 
-	test("""Disjunction (scalaz.\/) DSL""") {
-		import ImplicitDisjunctionOps._
+  test("""Disjunction (scalaz.\/) DSL""") {
+    import ImplicitDisjunctionOps._
 
-		// next
-		val _0 = \/-("Hello")
-			.next { () => assert(true) }
-		val _1 = \/-("Hello")
-			.next { assert(true) }
+    // next
+    val _0 = \/-("Hello")
+      .next { () => assert(true) }
+    val _1 = \/-("Hello")
+      .next { assert(true) }
 
-		// getUnsafe
-		assert("Hello" === \/-("Hello").getUnsafe)
-		try {
-			val e = new Exception()
-			-\/(e).getUnsafe
-		} catch {
-			case e: Exception => assert(true)
-		}
+    // getUnsafe
+    assert("Hello" === \/-("Hello").getUnsafe)
+    try {
+      val e = new Exception()
+      -\/(e).getUnsafe
+    } catch {
+      case e: Exception => assert(true)
+    }
 
-		// flaten
-		{
-			var nested: Int \/ (Int \/ String) = -\/(0)
-			var unnested: Int \/ String = -\/(0)
-			assert(nested.flatten == unnested)
+    // flaten
+    {
+      var nested: Int \/ (Int \/ String) = -\/(0)
+      var unnested: Int \/ String = -\/(0)
+      assert(nested.flatten == unnested)
 
-			nested = \/-(-\/(10))
-			unnested = -\/(10)
-			assert(nested.flatten == unnested)
+      nested = \/-(-\/(10))
+      unnested = -\/(10)
+      assert(nested.flatten == unnested)
 
+      nested = \/-(\/-("hello world"))
+      unnested = \/-("hello world")
+      assert(nested.flatten == unnested)
+    }
 
-			nested = \/-(\/-("hello world"))
-			unnested = \/-("hello world")
-			assert(nested.flatten == unnested)
-		}
+    // get
+    {
+      var orHelloWorld: String \/ String = \/-("world")
+      assert("world" === orHelloWorld.get)
+      orHelloWorld = -\/("hello")
+      assert("hello" === orHelloWorld.get)
+    }
+  }
 
-		// get
-		{
-			var orHelloWorld: String \/ String = \/-("world")
-			assert("world" === orHelloWorld.get)
-			orHelloWorld = -\/("hello")
-			assert("hello" === orHelloWorld.get)	
-		}
-	}
+  test("""Option DSL""") {
+    import ImplicitOptionOps._
 
+    val someHello: Option[String] = Some("hello")
 
-	test("""Option DSL""") {
-		import ImplicitOptionOps._
-		
-		// sideEffectOnly
+    // toOr
+    var optVal: Option[String] = someHello
+    assert(optVal.toOr == \/-("hello"))
 
-		var optVal: Option[String] = Some("hello")
-		val someHello = optVal
-			.sideEffectOnly { assert(false) }
-			.sideEffectOnly { v => assert("hello" === v) }
-			.sideEffectOnly(
-				assert(false),
-				v => assert("hello" === v)
-			)
-		assert(optVal === someHello)
+    optVal = None
+    assert(optVal.toOr == -\/(()))
+  }
 
-		optVal = None
-		val none = optVal
-			.sideEffectOnly { assert(true) }
-			.sideEffectOnly { _ => assert(false) }
-			.sideEffectOnly(
-				assert(true),
-				_ => assert(false)
-			)
-		assert(optVal === none)
+  test("""Try DSL""") {
+    import ImplicitTryOps._
 
-		// toOr
-		optVal = someHello
-		assert(optVal.toOr == \/-("hello"))
-		
-		optVal = none
-		assert(optVal.toOr == -\/(()))
-	}
+    var x: Try[String] = Success("hello")
+    assert(x.toOr == \/-("hello"))
 
-	test("""Try DSL""") {
-		import ImplicitTryOps._
+    val e = new Exception()
+    x = Failure(e)
+    assert(x.toOr == -\/(e))
+  }
 
-		var x: Try[String] = Success("hello")
-		assert(x.toOr == \/-("hello"))
+  test("""Misc / Extra / Unorganized Types DSL""") {
+    import ImplicitMiscOps._
 
-		val e = new Exception()
-		x = Failure(e)
-		assert(x.toOr == -\/(e))
-	}
+    val value = "hello world"
 
-	test("""Misc / Extra / Unorganized Types DSL""") {
-		import ImplicitMiscOps._
+    val shouldBeValue = value
+      .sideEffect { () => assert(true) }
+      .sideEffect { assert(true) }
 
-		val value = "hello world"
-
-		val shouldBeValue = value
-			.sideEffect { () => assert(true) }
-			.sideEffect { assert(true) }
-
-		assert(shouldBeValue === value)
-	}
-
+    assert(shouldBeValue === value)
+  }
 
 }
