@@ -1,7 +1,5 @@
 package sutils.std
 
-import java.util.Random
-
 object ImplicitOptionOps {
 
   /**
