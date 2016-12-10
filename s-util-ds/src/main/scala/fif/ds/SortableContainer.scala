@@ -16,8 +16,7 @@ object SortableContainer {
 
   def delete[A, S](module: SortableContainer[A, S])(
     existing: module.Structure,
-    elements: A*
-  ): Option[module.Structure] = {
+    elements: A*): Option[module.Structure] = {
 
     val (elementsNotInThisStructure, removedAny) =
       elements.foldLeft((existing, false)) {

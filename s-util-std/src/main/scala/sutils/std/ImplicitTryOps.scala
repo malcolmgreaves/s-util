@@ -21,8 +21,7 @@ object ImplicitTryOps {
      */
     def effect(
       ifFailure: Throwable => Unit,
-      ifSuccess: T => Unit
-    ): Try[T] = {
+      ifSuccess: T => Unit): Try[T] = {
       val _ = x.fold(ifFailure, ifSuccess)
       x
     }

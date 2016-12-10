@@ -9,7 +9,7 @@ object ImplicitOptionOps {
   implicit class OptionToDisjunction[T](private val x: Option[T]) extends AnyVal {
     @inline def toOr: \/[Unit, T] =
       x match {
-        case None => -\/(())
+        case None        => -\/(())
         case Some(value) => \/-(value)
       }
   }

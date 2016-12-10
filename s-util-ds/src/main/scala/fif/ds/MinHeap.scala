@@ -75,7 +75,7 @@ abstract class MinHeap[A: Cmp]
               item = heapItem,
               right = rtDeleted
             ),
-            ltAnyDeleted || rtAnyDeleted
+              ltAnyDeleted || rtAnyDeleted
           )
 
       case Empty =>
@@ -242,7 +242,7 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
                 item = item,
                 right = newRight
               ),
-              kickedOut
+                kickedOut
             )
 
           case Greater | Equivalent =>
@@ -261,7 +261,7 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
                         item = heapItem,
                         right = Empty
                       ),
-                      kickedOut
+                        kickedOut
                     )
 
                   case Full(_, _, _) =>
@@ -272,7 +272,7 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
                         item = heapItem,
                         right
                       ),
-                      kickedOut
+                        kickedOut
                     )
                 }
 
@@ -288,7 +288,7 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
                         item = heapItem,
                         right = newRight
                       ),
-                      kickedOut
+                        kickedOut
                     )
 
                   case Full(_, _, _) =>
@@ -299,7 +299,7 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
                         item = heapItem,
                         right = newRight
                       ),
-                      kickedOut
+                        kickedOut
                     )
                 }
             }
@@ -308,10 +308,9 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
 
   private def newLeftAndRight(
     theItem: A,
-    left:    Structure,
-    right:   Structure,
-    size:    Int
-  ): ((Structure, Structure), Option[A]) = {
+    left: Structure,
+    right: Structure,
+    size: Int): ((Structure, Structure), Option[A]) = {
     left match {
 
       case Empty =>

@@ -5,12 +5,9 @@ object StringHelpers {
   def split(
     clean: String => String,
     pass: String => Boolean,
-    trimRawInput: Boolean = true
-  )(
-    regexSeperator: String
-  )(
-    rawInput: String
-  ): Seq[String] =
+    trimRawInput: Boolean = true)(
+      regexSeperator: String)(
+        rawInput: String): Seq[String] =
     {
       if (trimRawInput)
         rawInput.trim()
@@ -48,8 +45,7 @@ object StringHelpers {
   @inline def insert(
     bits: Seq[String],
     index: Int,
-    x: String
-  ): Seq[String] =
+    x: String): Seq[String] =
 
     if (index <= 0)
       x +: bits
