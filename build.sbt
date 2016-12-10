@@ -1,4 +1,4 @@
-name := ""
+name := "s-util"
 
 import SharedBuild.{ doPublish, noPublish, RepoInfo }
 com.typesafe.sbt.SbtScalariform.defaultScalariformSettings
