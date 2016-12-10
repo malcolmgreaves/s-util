@@ -1,4 +1,4 @@
-name := "s-util-fp"
+name := "s-util-ds"
 
 import sbt._
 import Keys._

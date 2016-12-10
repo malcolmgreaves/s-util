@@ -5,6 +5,7 @@ import Keys._
 import SharedBuild._
 
 com.typesafe.sbt.SbtScalariform.defaultScalariformSettings
+ScalariformKeys.preferences := sharedCodeFmt
 
 //
 // NO compile libraryDependencies !!! 
