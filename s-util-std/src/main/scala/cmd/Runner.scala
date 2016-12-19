@@ -3,7 +3,7 @@ package cmd
 import scala.util.Try
 import sutils.std.ImplicitTryOps
 
-trait Runner {
+abstract class Runner {
 
   import ImplicitTryOps._
   import RunnerHelpers._
