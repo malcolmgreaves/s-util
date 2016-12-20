@@ -7,7 +7,7 @@ scalaVersion in ThisBuild := "2.11.8"
 organization in ThisBuild := "io.malcolmgreaves"
 version in ThisBuild      := {
   val major: Int = 0
-  val minor: Int = 4
+  val minor: Int = 5
   val patch: Int = 0
   s"$major.$minor.$patch"
 }
