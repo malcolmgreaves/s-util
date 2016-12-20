@@ -4,12 +4,8 @@ import sbt._
 import Keys._
 import SharedBuild._
 
-com.typesafe.sbt.SbtScalariform.defaultScalariformSettings
-ScalariformKeys.preferences := sharedCodeFmt
-
 addCompilerPlugin(scalaMacros)
 
-libraryDependencies ++= fpDeps 
 libraryDependencies ++= testDeps
 
 //

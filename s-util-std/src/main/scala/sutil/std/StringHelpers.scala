@@ -3,21 +3,19 @@ package sutil.std
 object StringHelpers {
 
   def split(
-    clean: String => String,
-    pass: String => Boolean,
-    trimRawInput: Boolean = true)(
-      regexSeperator: String)(
-        rawInput: String): Seq[String] =
-    {
-      if (trimRawInput)
-        rawInput.trim()
-      else
-        rawInput
-    }
-      .split(regexSeperator)
-      .map(clean)
-      .filter(pass)
-      .toSeq
+      clean: String => String,
+      pass: String => Boolean,
+      trimRawInput: Boolean = true
+  )(
+      regexSeperator: String
+  )(
+      rawInput: String
+  ): Seq[String] = {
+    if (trimRawInput)
+      rawInput.trim()
+    else
+      rawInput
+  }.split(regexSeperator).map(clean).filter(pass).toSeq
 
   def split(regexSeperator: String)(rawInput: String): Seq[String] =
     split(
@@ -42,17 +40,16 @@ object StringHelpers {
   lazy val spaceCombine: Combiner = combine("\t")
   lazy val newlineCombine: Combiner = combine("\n")
 
-  @inline def insert(
-    bits: Seq[String],
-    index: Int,
-    x: String): Seq[String] =
-
+  @inline
+  def insert(
+      bits: Seq[String],
+      index: Int,
+      x: String
+  ): Seq[String] =
     if (index <= 0)
       x +: bits
-
     else if (index >= bits.size)
       bits :+ x
-
     else
       (bits.slice(0, index) :+ x) ++ bits.slice(index, bits.size)
 

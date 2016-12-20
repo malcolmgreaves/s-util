@@ -1,7 +1,7 @@
 package sutil.fp
 
-import scala.util.{ Failure, Success, Try }
-import scalaz.{ -\/, \/, \/- }
+import scala.util.{Failure, Success, Try}
+import scalaz.{-\/, \/, \/-}
 
 object ImplicitTryOps {
 
