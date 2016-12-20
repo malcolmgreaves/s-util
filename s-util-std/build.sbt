@@ -4,8 +4,6 @@ import sbt._
 import Keys._
 import SharedBuild._
 
-com.typesafe.sbt.SbtScalariform.defaultScalariformSettings
-
 //
 // NO compile libraryDependencies !!! 
 //
