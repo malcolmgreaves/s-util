@@ -6,7 +6,7 @@ import SharedBuild._
 
 addCompilerPlugin(scalaMacros)
 
-libraryDependencies ++= testDeps
+libraryDependencies ++= dsDeps ++ testDeps
 
 //
 // test, runtime settings
