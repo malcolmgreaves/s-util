@@ -1,6 +1,6 @@
 package sutil.std
 
-import scala.util.{ Try, Success, Failure }
+import scala.util.{Try, Success, Failure}
 
 object ImplicitTryOps {
 
@@ -13,15 +13,16 @@ object ImplicitTryOps {
       }
   }
 
-  implicit class AddSideEffectOpToTry[T](private val x: Try[T]) extends AnyVal {
+  implicit class AddSideEffectOpToTry[T](private val x: Try[T])
+      extends AnyVal {
 
     /**
-     * Evaluates one of the two statements, depending on the case of the Try.
-     * Performs fold(ifFailure, ifSuccess) and then evaluates to the wrapped Try.
-     */
+      * Evaluates one of the two statements, depending on the case of the Try.
+      * Performs fold(ifFailure, ifSuccess) and then evaluates to the wrapped Try.
+      */
     def effect(
-      ifFailure: Throwable => Unit,
-      ifSuccess: T => Unit
+        ifFailure: Throwable => Unit,
+        ifSuccess: T => Unit
     ): Try[T] = {
       val _ = x.fold(ifFailure, ifSuccess)
       x

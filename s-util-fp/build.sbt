@@ -6,12 +6,12 @@ import SharedBuild._
 
 addCompilerPlugin(scalaMacros)
 
-libraryDependencies ++= fpDeps 
+libraryDependencies ++= fpDeps
 libraryDependencies ++= testDeps
 
 //
 // test, runtime settings
 //
-fork in run               := true
-fork in Test              := true
+fork in run := true
+fork in Test := true
 parallelExecution in Test := true

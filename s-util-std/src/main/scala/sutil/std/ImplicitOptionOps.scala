@@ -3,9 +3,9 @@ package sutil.std
 object ImplicitOptionOps {
 
   /**
-   * Adds same ability as "get" but with ability to customize
-   * exception message.
-   */
+    * Adds same ability as "get" but with ability to customize
+    * exception message.
+    */
   implicit class GetUnsafeOpt[T](private val x: Option[T]) extends AnyVal {
 
     def getUnsafe(errMessage: => String = "Value not present"): T =
@@ -13,12 +13,13 @@ object ImplicitOptionOps {
   }
 
   /** Evaluates side effecting functions, values on the Some() and None cases. */
-  implicit class AddSideEffectOpToOption[T](private val x: Option[T]) extends AnyVal {
+  implicit class AddSideEffectOpToOption[T](private val x: Option[T])
+      extends AnyVal {
 
     /**
-     * Evaluates one of the two statements, depending on the case of the Option.
-     * Performs fold(ifNone, ifSome) and then evaluates to the wrapped Option.
-     */
+      * Evaluates one of the two statements, depending on the case of the Option.
+      * Performs fold(ifNone, ifSome) and then evaluates to the wrapped Option.
+      */
     def sideEffectOnly(ifNone: => Unit, ifSome: T => Unit): Option[T] = {
       x.fold(ifNone)(ifSome)
       x

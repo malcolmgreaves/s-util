@@ -1,6 +1,6 @@
 package sutil.fp
 
-import scalaz.{ -\/, \/, \/- }
+import scalaz.{-\/, \/, \/-}
 
 object ImplicitMiscOps {
 

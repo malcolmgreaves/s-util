@@ -5,7 +5,7 @@ import Keys._
 import SharedBuild._
 
 //
-// NO compile libraryDependencies !!! 
+// NO compile libraryDependencies !!!
 //
 
 libraryDependencies ++= testDeps
@@ -13,6 +13,6 @@ libraryDependencies ++= testDeps
 //
 // test, runtime settings
 //
-fork in run               := true
-fork in Test              := true
+fork in run := true
+fork in Test := true
 parallelExecution in Test := true
