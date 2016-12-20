@@ -15,8 +15,8 @@ object Distribution {
   }
 
   def gaussian(
-    mean: Double,
-    stdDev: Double
+      mean: Double,
+      stdDev: Double
   )(size: Int)(implicit r: Random): Array[Double] = {
 
     val variance = stdDev * stdDev

@@ -7,49 +7,45 @@ import Types.Err
 object ImplicitDisjunctionOps {
 
   /** In both the left and right cases, runs a side-effecting unary function. */
-  implicit class DoNextUnaryFn[A, B](private val disjunction: \/[A, B]) extends AnyVal {
+  implicit class DoNextUnaryFn[A, B](private val disjunction: \/[A, B])
+      extends AnyVal {
 
     /** Silently swallows error. */
     @inline def next(performImmediatelyAfter: () => Unit): \/[A, B] =
-      disjunction
-        .leftMap { error =>
-          try { performImmediatelyAfter() }
-          catch { case _: Throwable => () }
-          error
-        }
-        .map { result =>
-          try { performImmediatelyAfter() }
-          catch { case _: Throwable => () }
-          result
-        }
+      disjunction.leftMap { error =>
+        try { performImmediatelyAfter() } catch { case _: Throwable => () }
+        error
+      }.map { result =>
+        try { performImmediatelyAfter() } catch { case _: Throwable => () }
+        result
+      }
   }
 
   /** In both the left and right cases, evaluates a side-effecting value. */
-  implicit class DoNextLazy[A, B](private val disjunction: \/[A, B]) extends AnyVal {
+  implicit class DoNextLazy[A, B](private val disjunction: \/[A, B])
+      extends AnyVal {
 
     /** Silently swallows error. */
     @inline def next(performImmediatelyAfter: => Unit): \/[A, B] =
-      disjunction
-        .leftMap { error =>
-          try { performImmediatelyAfter }
-          catch { case _: Throwable => () }
-          error
-        }
-        .map { result =>
-          try { performImmediatelyAfter }
-          catch { case _: Throwable => () }
-          result
-        }
+      disjunction.leftMap { error =>
+        try { performImmediatelyAfter } catch { case _: Throwable => () }
+        error
+      }.map { result =>
+        try { performImmediatelyAfter } catch { case _: Throwable => () }
+        result
+      }
   }
 
   /** Obtains the value within a disjunction. Throws an exception if the value is not present. */
-  implicit class UnsafeGetOnDisjunction[T](private val x: Err[T]) extends AnyVal {
+  implicit class UnsafeGetOnDisjunction[T](private val x: Err[T])
+      extends AnyVal {
     @inline def getUnsafe: T =
       x.fold(e => throw e, identity)
   }
 
   /** If the right value is an error, it propigates it to the left side. */
-  implicit class FlattenOr[L, R](private val x: \/[L, \/[L, R]]) extends AnyVal {
+  implicit class FlattenOr[L, R](private val x: \/[L, \/[L, R]])
+      extends AnyVal {
     @inline def flatten: \/[L, R] = x flatMap { identity }
   }
 
