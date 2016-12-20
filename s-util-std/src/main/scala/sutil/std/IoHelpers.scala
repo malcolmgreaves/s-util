@@ -1,4 +1,4 @@
-package sutils.std
+package sutil.std
 
 import scala.util.Try
 import java.io.{ File, FileWriter, BufferedWriter }

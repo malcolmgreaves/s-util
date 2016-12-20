@@ -1,7 +1,8 @@
-package cmd
+package sutil.cmd
+
+import sutil.std.ImplicitTryOps
 
 import scala.util.Try
-import sutils.std.ImplicitTryOps
 
 abstract class Runner {
 
@@ -28,7 +29,7 @@ abstract class Runner {
 
   /** Parses args, runs the main function, and handles errors. */
   final def main(cmdLineArgs: Array[String]): Unit =
-    if (cmdLineArgs.length == 1 && checkArgIsAskHelp(cmdLineArgs.head)) {
+    if(shouldPrintHelp(cmdLineArgs)) {
       log(helpMsg)
       goodExit()
 
