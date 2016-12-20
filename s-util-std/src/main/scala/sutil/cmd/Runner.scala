@@ -1,7 +1,8 @@
-package sutils.cmd
+package sutil.cmd
+
+import sutil.std.ImplicitTryOps
 
 import scala.util.Try
-import sutils.std.ImplicitTryOps
 
 abstract class Runner {
 

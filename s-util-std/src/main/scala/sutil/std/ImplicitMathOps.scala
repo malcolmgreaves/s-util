@@ -1,4 +1,4 @@
-package sutils.std
+package sutil.std
 
 object ImplicitMathOps {
 

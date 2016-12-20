@@ -1,4 +1,4 @@
-package sutils.cmd
+package sutil.cmd
 
 import java.util.Date
 
