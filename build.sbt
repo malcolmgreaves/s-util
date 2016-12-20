@@ -1,7 +1,6 @@
 name := "s-util"
 
 import SharedBuild.{ doPublish, noPublish, RepoInfo }
-com.typesafe.sbt.SbtScalariform.defaultScalariformSettings
 
 scalaVersion in ThisBuild := "2.11.8"
 organization in ThisBuild := "io.malcolmgreaves"
