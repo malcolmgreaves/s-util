@@ -1,4 +1,4 @@
-package sutils.fp
+package sutil.fp
 
 import scalaz.{ \/, Tag, @@ }
 

@@ -7,7 +7,7 @@ scalaVersion in ThisBuild := "2.11.8"
 organization in ThisBuild := "io.malcolmgreaves"
 version in ThisBuild      := {
   val major: Int = 0
-  val minor: Int = 3
+  val minor: Int = 4
   val patch: Int = 0
   s"$major.$minor.$patch"
 }
@@ -25,8 +25,8 @@ lazy val `s-util-std` = project
   .in(file("s-util-std"))
   .settings {
     doPublish { 
-	    RepoInfo(group = "malcolmgreaves", name = "s-util-std")
-  	}
+      RepoInfo(group = "malcolmgreaves", name = "s-util-std")
+    }
   }
 
 lazy val `s-util-fp` = project
@@ -34,8 +34,8 @@ lazy val `s-util-fp` = project
   .dependsOn(`s-util-std`)
   .settings {
     doPublish { 
-	    RepoInfo(group = "malcolmgreaves", name = "s-util-fp")
-  	}
+      RepoInfo(group = "malcolmgreaves", name = "s-util-fp")
+    }
   }
 
 lazy val `s-util-ds` = project
@@ -53,12 +53,12 @@ lazy val publishTasks = subprojects.map { publish.in }
 resolvers in ThisBuild := Seq(
   "Sonatype Releases"  at "https://oss.sonatype.org/content/repositories/releases/"
   ,"Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
-	,"Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
+  ,"Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
 )
 
 lazy val javaV = "1.8"
 scalacOptions in ThisBuild := Seq(
-	"-Xfatal-warnings" // Every warning is esclated to an error.
+  "-Xfatal-warnings" // Every warning is esclated to an error.
   ,"-optimize"
   ,"-deprecation"
   ,"-feature"
@@ -88,3 +88,4 @@ javaOptions in ThisBuild  := Seq(
   ,"-XX:CompileThreshold=420"
   ,"-Xmx3000M"
 )
+
