@@ -10,7 +10,7 @@ object Types {
   /** Unit, with the possibility of an error associated with the side effect. */
   type SideEffect = Err[Unit]
 
-  /** A non-negative integer type. */
+  /** A non-negative integer type representing a physical size.*/
   type Size = Int @@ Size.T
   object Size {
 
@@ -28,5 +28,25 @@ object Types {
     /** The Size phantom type. */
     sealed trait T
   }
+  
+  
+  /** A non-negative integer type representing an index. */
+  type Index = Int @@ Index.T
+  object Index {
 
+    /** Size constructor: throws Exception if input is negative. */
+    def apply(x: Int): Index = {
+      if (x >= 0) Tag[Int, T](x)
+      else
+        throw new IllegalArgumentException(
+          s"Index must be non-negative, not $x")
+    }
+
+    /** Size value accessor. */
+    def apply(x: Index): Int = Tag.unwrap(x)
+
+    /** The Size phantom type. */
+    sealed trait T
+  }
+  
 }
