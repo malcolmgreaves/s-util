@@ -70,8 +70,7 @@ scalacOptions in ThisBuild := Seq(
   "-Ywarn-value-discard",
   "-Xlint",
   "-Xfuture",
-  "-Ywarn-dead-code",
-  "-Yinline-warnings"
+  "-Ywarn-dead-code"
 )
 javacOptions in ThisBuild := Seq("-source", javaV, "-target", javaV)
 javaOptions in ThisBuild := Seq(
