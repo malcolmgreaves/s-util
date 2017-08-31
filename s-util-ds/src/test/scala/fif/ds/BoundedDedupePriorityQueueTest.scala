@@ -4,7 +4,7 @@ import algebra.Eq
 import org.scalatest.FunSuite
 
 import scala.annotation.tailrec
-import scala.language.postfixOps
+
 import scala.reflect.ClassTag
 
 class BoundedDedupePriorityQueueTest extends FunSuite {

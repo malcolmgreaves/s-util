@@ -1,7 +1,5 @@
 package fif.ds
 
-import scala.language.postfixOps
-
 trait SortableContainer[A, S] extends Container[A, S] {
 
   val cmp: Cmp[A]

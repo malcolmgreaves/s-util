@@ -3,7 +3,6 @@ package fif.ds
 import org.scalatest.FunSuite
 
 import scala.annotation.tailrec
-import scala.language.postfixOps
 
 class MinHeapTest extends FunSuite {
 

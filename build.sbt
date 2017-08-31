@@ -53,7 +53,8 @@ resolvers in ThisBuild := Seq(
 lazy val javaV = "1.8"
 scalacOptions in ThisBuild := Seq(
   "-Xfatal-warnings", // Every warning is esclated to an error.
-  "-opt:l:inline", "-opt-inline-from:**",
+  "-opt:l:inline",
+  "-opt-inline-from:**",
   "-deprecation",
   "-feature",
   "-unchecked",

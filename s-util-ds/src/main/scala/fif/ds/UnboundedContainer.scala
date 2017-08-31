@@ -1,7 +1,5 @@
 package fif.ds
 
-import scala.language.postfixOps
-
 trait UnboundedContainer[A, S] extends Container[A, S] {
 
   def merge(a: Structure, b: Structure): Structure

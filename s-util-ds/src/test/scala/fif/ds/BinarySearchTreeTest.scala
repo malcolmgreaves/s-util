@@ -2,8 +2,6 @@ package fif.ds
 
 import org.scalatest.FunSuite
 
-import scala.annotation.tailrec
-import scala.language.postfixOps
 import scala.util.Random
 
 class BinarySearchTreeTest extends FunSuite {

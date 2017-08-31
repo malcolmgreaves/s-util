@@ -1,7 +1,5 @@
 package fif.ds
 
-import scala.language.higherKinds
-
 trait Cmp[A] extends Serializable {
   def compare(a: A, b: A): Comparision
 }

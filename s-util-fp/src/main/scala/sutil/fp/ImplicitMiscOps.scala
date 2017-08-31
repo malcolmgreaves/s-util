@@ -1,7 +1,5 @@
 package sutil.fp
 
-import scalaz.{-\/, \/, \/-}
-
 object ImplicitMiscOps {
 
   /** Evaluate a unary side-effecting function. Convenient for method chaining on a value of type T. */

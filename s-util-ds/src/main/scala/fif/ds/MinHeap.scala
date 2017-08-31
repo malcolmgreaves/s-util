@@ -2,7 +2,6 @@ package fif.ds
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
-import scala.language.{postfixOps, higherKinds}
 
 abstract class MinHeap[A: Cmp]
     extends SortableContainer[A, TreeParts.Tree[A]]
