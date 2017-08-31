@@ -55,7 +55,7 @@ scalacOptions in ThisBuild := Seq(
   "-opt:l:inline",
   "-opt-inline-from:**",
   s"-target:jvm-$javaV",
-//  "-Xsource:2.11", // TODO: remove !!!
+  "-Xsource:2.11", // TODO: remove !!!
   "-encoding",
   "-deprecation", // Emit warning and location for usages of deprecated APIs.
   "-encoding",

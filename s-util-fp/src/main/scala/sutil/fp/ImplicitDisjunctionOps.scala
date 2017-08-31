@@ -11,7 +11,7 @@ object ImplicitDisjunctionOps {
       extends AnyVal {
 
     /** Silently swallows error. */
-    @inline def next(performImmediatelyAfter: () => Any): \/[A, B] =
+    @inline def next(performImmediatelyAfter: () => Unit): \/[A, B] =
       disjunction
         .leftMap { error =>
           try { performImmediatelyAfter() } catch { case _: Throwable => () }
