@@ -6,9 +6,9 @@ object SharedBuild {
   // // // // // // // //
   // //   Versions  // //
   // // // // // // // //
-  
-  lazy val scalazV  = "7.2.6"
-  lazy val macroV   = "2.1.0"
+
+  lazy val scalazV = "7.2.15"
+  lazy val macroV = "2.1.0"
   lazy val algebraV = "0.4.2"
 
   // // // // // // // // // //
@@ -27,7 +27,7 @@ object SharedBuild {
   )
 
   lazy val testDeps = Seq(
-    "org.scalatest" %% "scalatest" % "2.2.6" % Test
+    "org.scalatest" %% "scalatest" % "3.0.1" % Test
   )
 
   // // // // // // // // // //
@@ -35,24 +35,27 @@ object SharedBuild {
   // // // // // // // // // //
 
   case class RepoInfo(
-    group: String,
-    name:  String
+      group: String,
+      name: String
   )
 
-  lazy val doPublish = (ri: RepoInfo) => Seq(
-    publishMavenStyle       := true,
-    isSnapshot              := false,
-    publishArtifact in Test := false,
-    publishTo               := {
-      val nexus = "https://oss.sonatype.org/"
-      if (isSnapshot.value)
-        Some("snapshots" at nexus + "content/repositories/snapshots")
-      else
-        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-    },
-    pomIncludeRepository    := { _ => false },
-    pomExtra                := {
-      <url>https://github.com/{ ri.group }/{ ri.name }</url>
+  lazy val doPublish = (ri: RepoInfo) =>
+    Seq(
+      publishMavenStyle := true,
+      isSnapshot := false,
+      publishArtifact in Test := false,
+      publishTo := {
+        val nexus = "https://oss.sonatype.org/"
+        if (isSnapshot.value)
+          Some("snapshots" at nexus + "content/repositories/snapshots")
+        else
+          Some("releases" at nexus + "service/local/staging/deploy/maven2")
+      },
+      pomIncludeRepository := { _ =>
+        false
+      },
+      pomExtra := {
+        <url>https://github.com/{ ri.group }/{ ri.name }</url>
         <licenses>
           <license>
             <name>Apache 2.0</name>
@@ -72,19 +75,21 @@ object SharedBuild {
             <url>https://malcolmgreaves.io/</url>
           </developer>
         </developers>
-    },
-    publishArtifact         := true
+      },
+      publishArtifact := true
   )
 
   lazy val noPublish = Seq(
-    isSnapshot              := true,
+    isSnapshot := true,
     publishArtifact in Test := false,
-    publishTo               := None,
-    pomIncludeRepository    := { _ => false },
-    pomExtra                := { <nothing></nothing> },
-    publishLocal            := {},
-    publish                 := {},
-    publishArtifact         := false
+    publishTo := None,
+    pomIncludeRepository := { _ =>
+      false
+    },
+    pomExtra := { <nothing></nothing> },
+    publishLocal := {},
+    publish := {},
+    publishArtifact := false
   )
 
 }
