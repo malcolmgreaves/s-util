@@ -20,13 +20,13 @@ object ImplicitOptionOps {
       * Evaluates one of the two statements, depending on the case of the Option.
       * Performs fold(ifNone, ifSome) and then evaluates to the wrapped Option.
       */
-    def sideEffectOnly(ifNone: => Unit, ifSome: T => Unit): Option[T] = {
+    def sideEffectOnly(ifNone: => Any, ifSome: T => Unit): Option[T] = {
       x.fold(ifNone)(ifSome)
       x
     }
 
     /** Evaluates the parameter when the Option is None. */
-    def sideEffectOnly(ifNone: => Unit): Option[T] = {
+    def sideEffectOnly(ifNone: => Any): Option[T] = {
       x.fold(ifNone)(_ => ())
       x
     }

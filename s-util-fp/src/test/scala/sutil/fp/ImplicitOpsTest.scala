@@ -2,8 +2,6 @@ package sutil.fp
 
 import org.scalatest.FunSuite
 
-import Types._
-
 import scala.util.{Failure, Success, Try}
 import scalaz.{-\/, \/, \/-}
 
