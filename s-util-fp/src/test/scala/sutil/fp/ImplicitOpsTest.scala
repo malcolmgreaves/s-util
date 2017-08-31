@@ -4,8 +4,8 @@ import org.scalatest.FunSuite
 
 import Types._
 
-import scala.util.{ Failure, Success, Try }
-import scalaz.{ -\/, \/, \/- }
+import scala.util.{Failure, Success, Try}
+import scalaz.{-\/, \/, \/-}
 
 class ImplicitOpsTest extends FunSuite {
 
@@ -14,7 +14,9 @@ class ImplicitOpsTest extends FunSuite {
 
     // next
     val _0 = \/-("Hello")
-      .next { () => assert(true) }
+      .next { () =>
+        assert(true)
+      }
     val _1 = \/-("Hello")
       .next { assert(true) }
 
@@ -81,7 +83,9 @@ class ImplicitOpsTest extends FunSuite {
     val value = "hello world"
 
     val shouldBeValue = value
-      .sideEffect { () => assert(true) }
+      .sideEffect { () =>
+        assert(true)
+      }
       .sideEffect { assert(true) }
 
     assert(shouldBeValue === value)

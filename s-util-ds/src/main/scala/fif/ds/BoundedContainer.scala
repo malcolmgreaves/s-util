@@ -14,9 +14,8 @@ trait BoundedContainer[A, S] extends Container[A, S] {
 
 object BoundedContainer {
 
-  def merge[A, S](module: BoundedContainer[A, S])(
-      initial: module.Structure,
-      structures: module.Structure*)
+  def merge[A, S](module: BoundedContainer[A, S])(initial: module.Structure,
+                                                  structures: module.Structure*)
     : (module.Structure, Option[Iterable[A]]) = {
 
     val (finalMerged, kickedOut) =

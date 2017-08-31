@@ -18,8 +18,7 @@ object Types {
     def apply(x: Int): Size = {
       if (x >= 0) Tag[Int, T](x)
       else
-        throw new IllegalArgumentException(
-          s"Size must be non-negative, not $x")
+        throw new IllegalArgumentException(s"Size must be non-negative, not $x")
     }
 
     /** Size value accessor. */

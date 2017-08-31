@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 import Types._
 
-import scalaz.{ -\/, \/, \/- }
+import scalaz.{-\/, \/, \/-}
 
 class TypesTest extends FunSuite {
 

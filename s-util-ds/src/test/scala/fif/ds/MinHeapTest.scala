@@ -13,12 +13,14 @@ class MinHeapTest extends FunSuite {
 
     val bounded1MinHeap = MinHeap.Bounded[Int](1)
 
-    val (result, _) = BoundedContainer.insert(bounded1MinHeap)(bounded1MinHeap.empty, 3, 4, 1)
+    val (result, _) =
+      BoundedContainer.insert(bounded1MinHeap)(bounded1MinHeap.empty, 3, 4, 1)
 
     val (min, rest) = bounded1MinHeap.takeMin(result).get
 
     assert(min == 1, "expected min to be 1")
-    assert(bounded1MinHeap.takeMin(rest).isEmpty, "expected bounded 1 PQ to only have 1 element")
+    assert(bounded1MinHeap.takeMin(rest).isEmpty,
+           "expected bounded 1 PQ to only have 1 element")
   }
 
   test("Use unbounded min heap to sort ") {
@@ -26,32 +28,34 @@ class MinHeapTest extends FunSuite {
 
     val UnboundedMinHeap = MinHeap.Unbounded[Int]
 
-    val result = UnboundedContainer.insert(UnboundedMinHeap)(UnboundedMinHeap.empty, values: _*)
+    val result =
+      UnboundedContainer.insert(UnboundedMinHeap)(UnboundedMinHeap.empty,
+                                                  values: _*)
 
-      @tailrec @inline def check(minSortedValues: List[Int], e: UnboundedMinHeap.Structure): Unit =
+    @tailrec @inline def check(minSortedValues: List[Int],
+                               e: UnboundedMinHeap.Structure): Unit =
+      UnboundedMinHeap.takeMin(e) match {
 
-        UnboundedMinHeap.takeMin(e) match {
+        case None =>
+          assert(minSortedValues.isEmpty,
+                 "heap empty, expecting value list to be as well")
 
-          case None =>
-            assert(minSortedValues.isEmpty, "heap empty, expecting value list to be as well")
+        case Some((min, restOfHeap)) =>
+          minSortedValues match {
 
-          case Some((min, restOfHeap)) =>
+            case Nil =>
+              fail("unexpected: ran out of values but still more in heap")
 
-            minSortedValues match {
+            case head :: tail =>
+              assert(
+                head == min,
+                s"expecting sorted values to match heap takeMin... have $min expecting $head"
+              )
 
-              case Nil =>
-                fail("unexpected: ran out of values but still more in heap")
+              check(tail, restOfHeap)
 
-              case head :: tail =>
-                assert(
-                  head == min,
-                  s"expecting sorted values to match heap takeMin... have $min expecting $head"
-                )
-
-                check(tail, restOfHeap)
-
-            }
-        }
+          }
+      }
 
     check(values.sorted.toList, result)
   }
@@ -61,7 +65,8 @@ class MinHeapTest extends FunSuite {
 
     val BoundValuePQ = MinHeap.Bounded[Int](3)
 
-    val (resultPq, removed) = BoundedContainer.insert(BoundValuePQ)(BoundValuePQ.empty, values: _*)
+    val (resultPq, removed) =
+      BoundedContainer.insert(BoundValuePQ)(BoundValuePQ.empty, values: _*)
     assert(removed.isDefined && removed.get.size == values.size - 3)
 
     val (item1, pq1) = BoundValuePQ.takeMin(resultPq).get

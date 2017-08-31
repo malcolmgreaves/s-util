@@ -13,12 +13,14 @@ class BoundedPriorityQueueTest extends FunSuite {
   val Bound1PQ = intBindPQ(1)
 
   test("Simple queue of size 1") {
-    val result = Bound1PQ.empty |> Bound1PQ.insert(3) |> Bound1PQ.insert(4) |> Bound1PQ.insert(1)
+    val result = Bound1PQ.empty |> Bound1PQ.insert(3) |> Bound1PQ.insert(4) |> Bound1PQ
+      .insert(1)
 
     val (min, rest) = Bound1PQ.takeMin(result).get
 
     assert(min == 1, "expected min to be 1")
-    assert(Bound1PQ.takeMin(rest).isEmpty, "expected bounded 1 PQ to only have 1 element")
+    assert(Bound1PQ.takeMin(rest).isEmpty,
+           "expected bounded 1 PQ to only have 1 element")
   }
 
   test("More values and ordering of P.Q. of size 1") {
@@ -32,29 +34,29 @@ class BoundedPriorityQueueTest extends FunSuite {
           case (pq, v) => pq |> BoundValuePQ.insert(v)
         })
 
-      @tailrec @inline def check(minSortedValues: List[Int], e: BoundValuePQ.T): Unit =
+    @tailrec @inline def check(minSortedValues: List[Int],
+                               e: BoundValuePQ.T): Unit =
+      BoundValuePQ.takeMin(e) match {
 
-        BoundValuePQ.takeMin(e) match {
+        case None =>
+          assert(minSortedValues.isEmpty,
+                 "heap empty, expecting value list to be as well")
 
-          case None =>
-            assert(minSortedValues.isEmpty, "heap empty, expecting value list to be as well")
+        case Some((min, restOfHeap)) =>
+          minSortedValues match {
 
-          case Some((min, restOfHeap)) =>
+            case Nil =>
+              fail("unexpected: ran out of values but still more in heap")
 
-            minSortedValues match {
+            case head :: tail =>
+              assert(
+                head == min,
+                s"expecting sorted values to match heap takeMin... have $min expecting $head"
+              )
+              check(tail, restOfHeap)
 
-              case Nil =>
-                fail("unexpected: ran out of values but still more in heap")
-
-              case head :: tail =>
-                assert(
-                  head == min,
-                  s"expecting sorted values to match heap takeMin... have $min expecting $head"
-                )
-                check(tail, restOfHeap)
-
-            }
-        }
+          }
+      }
 
     check(values.sorted.toList, result)
   }

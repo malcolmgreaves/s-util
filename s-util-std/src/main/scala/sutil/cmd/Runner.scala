@@ -41,24 +41,26 @@ abstract class Runner {
           }
         }
       }.effectOnFailure { e =>
-        log(s"Error parsing arguments (# ${cmdLineArgs.length}):\n\n$e\n\n")
-        e.printStackTrace(System.err)
-        log(s"Actual command line arguments:\n\n${cmdLineArgs.toSeq}\n\n")
-        log(s"Help message:\n\n$helpMsg")
-        badExit()
-      }.flatMap { args =>
-        Try { main_hUnsafe { args } }
-      }.fold(
-        e => {
-          log(s"$time FAILURE of [ $name ]\n\n$e\n\n")
+          log(s"Error parsing arguments (# ${cmdLineArgs.length}):\n\n$e\n\n")
           e.printStackTrace(System.err)
+          log(s"Actual command line arguments:\n\n${cmdLineArgs.toSeq}\n\n")
+          log(s"Help message:\n\n$helpMsg")
           badExit()
-        },
-        _ => {
-          log(s"$time done! safe to exit [ $name ]")
-          goodExit()
         }
-      )
+        .flatMap { args =>
+          Try { main_hUnsafe { args } }
+        }
+        .fold(
+          e => {
+            log(s"$time FAILURE of [ $name ]\n\n$e\n\n")
+            e.printStackTrace(System.err)
+            badExit()
+          },
+          _ => {
+            log(s"$time done! safe to exit [ $name ]")
+            goodExit()
+          }
+        )
 
   /** The runner's name. Defaults to the class name. */
   lazy val name: String =

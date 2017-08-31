@@ -13,8 +13,7 @@ object ImplicitTryOps {
       }
   }
 
-  implicit class AddSideEffectOpToTry[T](private val x: Try[T])
-      extends AnyVal {
+  implicit class AddSideEffectOpToTry[T](private val x: Try[T]) extends AnyVal {
 
     /**
       * Evaluates one of the two statements, depending on the case of the Try.

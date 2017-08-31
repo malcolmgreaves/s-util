@@ -35,7 +35,9 @@ class StdMiscTest extends FunSuite {
     var optVal: Option[String] = Some("hello")
     val someHello = optVal
       .sideEffectOnly { assert(false) }
-      .sideEffectOnly { v => assert("hello" === v) }
+      .sideEffectOnly { v =>
+        assert("hello" === v)
+      }
       .sideEffectOnly(
         assert(false),
         v => assert("hello" === v)
@@ -45,7 +47,9 @@ class StdMiscTest extends FunSuite {
     optVal = None
     val none = optVal
       .sideEffectOnly { assert(true) }
-      .sideEffectOnly { _ => assert(false) }
+      .sideEffectOnly { _ =>
+        assert(false)
+      }
       .sideEffectOnly(
         assert(true),
         _ => assert(false)

@@ -25,7 +25,8 @@ class BinarySearchTreeTest extends FunSuite {
       Seq(1),
       Seq(1, 2, 3)
     )
-    sequencesToSort.zip(expected)
+    sequencesToSort
+      .zip(expected)
       .foreach {
         case (seq, expect) =>
           val inserted = UnboundedContainer.insert(bstInt, seq: _*)
@@ -62,7 +63,8 @@ class BinarySearchTreeTest extends FunSuite {
         () // expected !
 
       case Some(shouldNotHaveDeleted) =>
-        fail(s"should not have delted non existant element from tree, result: $shouldNotHaveDeleted")
+        fail(
+          s"should not have delted non existant element from tree, result: $shouldNotHaveDeleted")
     }
 
     bstInt.delete(5)(tree) match {
@@ -70,7 +72,9 @@ class BinarySearchTreeTest extends FunSuite {
         fail(s"expecting to remove 5 from tree: $tree")
 
       case Some(deleted) =>
-        assert(bstInt.sort(deleted) == bstInt.sort(UnboundedContainer.insert(bstInt, 1, 2, 3, 4)))
+        assert(
+          bstInt.sort(deleted) == bstInt.sort(
+            UnboundedContainer.insert(bstInt, 1, 2, 3, 4)))
     }
 
     bstInt.delete(1)(tree) match {
@@ -78,7 +82,9 @@ class BinarySearchTreeTest extends FunSuite {
         fail(s"expecting to remove 1 from tree: $tree")
 
       case Some(deleted) =>
-        assert(bstInt.sort(deleted) == bstInt.sort(UnboundedContainer.insert(bstInt, 2, 3, 4, 5)))
+        assert(
+          bstInt.sort(deleted) == bstInt.sort(
+            UnboundedContainer.insert(bstInt, 2, 3, 4, 5)))
     }
   }
 
@@ -112,8 +118,10 @@ class BinarySearchTreeTest extends FunSuite {
 
   val randStrLen = 20
 
-  test(s"sort list of $nElementsForRand strings length $randStrLen drawn uniformly at random") {
-    val elements = (0 until nElementsForRand).map(_ => rand.nextString(randStrLen)).toSeq
+  test(
+    s"sort list of $nElementsForRand strings length $randStrLen drawn uniformly at random") {
+    val elements =
+      (0 until nElementsForRand).map(_ => rand.nextString(randStrLen)).toSeq
     val expected = elements.sorted
     implicit val sc = Cmp.Implicits.strCmp
     val bstStr = BinarySearchTree[String]()

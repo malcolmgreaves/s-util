@@ -12,13 +12,15 @@ object ImplicitDisjunctionOps {
 
     /** Silently swallows error. */
     @inline def next(performImmediatelyAfter: () => Unit): \/[A, B] =
-      disjunction.leftMap { error =>
-        try { performImmediatelyAfter() } catch { case _: Throwable => () }
-        error
-      }.map { result =>
-        try { performImmediatelyAfter() } catch { case _: Throwable => () }
-        result
-      }
+      disjunction
+        .leftMap { error =>
+          try { performImmediatelyAfter() } catch { case _: Throwable => () }
+          error
+        }
+        .map { result =>
+          try { performImmediatelyAfter() } catch { case _: Throwable => () }
+          result
+        }
   }
 
   /** In both the left and right cases, evaluates a side-effecting value. */
@@ -27,13 +29,15 @@ object ImplicitDisjunctionOps {
 
     /** Silently swallows error. */
     @inline def next(performImmediatelyAfter: => Unit): \/[A, B] =
-      disjunction.leftMap { error =>
-        try { performImmediatelyAfter } catch { case _: Throwable => () }
-        error
-      }.map { result =>
-        try { performImmediatelyAfter } catch { case _: Throwable => () }
-        result
-      }
+      disjunction
+        .leftMap { error =>
+          try { performImmediatelyAfter } catch { case _: Throwable => () }
+          error
+        }
+        .map { result =>
+          try { performImmediatelyAfter } catch { case _: Throwable => () }
+          result
+        }
   }
 
   /** Obtains the value within a disjunction. Throws an exception if the value is not present. */

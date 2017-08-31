@@ -13,7 +13,8 @@ class BoundedDedupePriorityQueueTest extends FunSuite {
 
     implicit val doubleCmp: Cmp[(String, Double)] =
       new Cmp[(String, Double)] {
-        override def compare(a: (String, Double), b: (String, Double)): Comparision =
+        override def compare(a: (String, Double),
+                             b: (String, Double)): Comparision =
           if (a._2 > b._2) // backwards for max-priority queue!
             Less
           else if (a._2 < b._2) // backwards for max-priority queue!
@@ -57,14 +58,22 @@ class BoundedDedupePriorityQueueTest extends FunSuite {
 
     val priorityQueueModule = ListPqModule.bounded(limit)
 
-    val (finalPqInstance, removed) = BoundedContainer.insert(priorityQueueModule, values: _*)
+    val (finalPqInstance, removed) =
+      BoundedContainer.insert(priorityQueueModule, values: _*)
     assert(removed.isDefined && removed.get.size == 5)
 
     val sorted = priorityQueueModule.sort(finalPqInstance)
     assert(sorted.size == limit)
 
-    val expected = Seq("hello", "second_place", "third_place", "fourth_place", "fifth_place", "sixth_place")
-    sorted.map(_._1).zip(expected)
+    val expected = Seq("hello",
+                       "second_place",
+                       "third_place",
+                       "fourth_place",
+                       "fifth_place",
+                       "sixth_place")
+    sorted
+      .map(_._1)
+      .zip(expected)
       .foreach {
         case (x, e) => assert(x == e)
       }
@@ -94,7 +103,8 @@ class BoundedDedupePriorityQueueTest extends FunSuite {
 
     assert(expecting.size == sorted.size)
 
-    expecting.zip(sorted)
+    expecting
+      .zip(sorted)
       .foreach {
         case ((cK, _), (mK, _)) => assert(cK == mK)
       }
