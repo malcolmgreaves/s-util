@@ -3,6 +3,7 @@ package fif.ds
 import algebra.Eq
 
 import scala.annotation.tailrec
+import scala.language.postfixOps
 
 object ListPriorityQueue {
 

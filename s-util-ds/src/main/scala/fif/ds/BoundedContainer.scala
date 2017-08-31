@@ -1,5 +1,7 @@
 package fif.ds
 
+import scala.language.postfixOps
+
 trait BoundedContainer[A, S] extends Container[A, S] {
 
   val maxSize: Int

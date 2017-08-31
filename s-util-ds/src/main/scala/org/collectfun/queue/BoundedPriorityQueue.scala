@@ -53,7 +53,7 @@ object BoundedPriorityQueue {
             else
               existing
 
-          case f @ Full(left, heapItem, right) =>
+          case Full(left, heapItem, right) =>
             val cmp = doubleOrdering.compare(O(item), O(heapItem))
             if (cmp < 0)
               // item is "more minimum" than heap item:
