@@ -2,9 +2,8 @@ name := "s-util"
 
 import SharedBuild.{doPublish, noPublish, RepoInfo}
 
-scalaVersion in ThisBuild := "2.11.8"
-crossScalaVersions := Seq("2.12.3", scalaVersion.value)
-//crossScalaVersions in ThisBuild =scalaVersion s => Seq("2.12.3",  s)
+scalaVersion in ThisBuild := "2.12.3"
+crossScalaVersions := Seq("2.11.8", scalaVersion.value)
 organization in ThisBuild := "io.malcolmgreaves"
 version in ThisBuild := {
   val major: Int = 0
