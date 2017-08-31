@@ -15,8 +15,8 @@ trait SortableContainer[A, S] extends Container[A, S] {
 object SortableContainer {
 
   def delete[A, S](module: SortableContainer[A, S])(
-    existing: module.Structure,
-    elements: A*): Option[module.Structure] = {
+      existing: module.Structure,
+      elements: A*): Option[module.Structure] = {
 
     val (elementsNotInThisStructure, removedAny) =
       elements.foldLeft((existing, false)) {

@@ -28,8 +28,7 @@ object Types {
     /** The Size phantom type. */
     sealed trait T
   }
-  
-  
+
   /** A non-negative integer type representing an index. */
   type Index = Int @@ Index.T
   object Index {
@@ -48,5 +47,5 @@ object Types {
     /** The Size phantom type. */
     sealed trait T
   }
-  
+
 }

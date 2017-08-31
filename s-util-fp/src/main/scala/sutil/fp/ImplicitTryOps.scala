@@ -9,7 +9,7 @@ object ImplicitTryOps {
     @inline def toOr: \/[Throwable, T] =
       x match {
         case Success(value) => \/-(value)
-        case Failure(e)     => -\/(e)
+        case Failure(e) => -\/(e)
       }
   }
 

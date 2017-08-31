@@ -9,15 +9,18 @@ object ListPriorityQueue {
 
   object Bounded {
 
-    def apply[A: Cmp: Eq](maximumHeapSize: Int): PriorityQueue[A, List[A]]#Bounded =
+    def apply[A: Cmp: Eq](
+        maximumHeapSize: Int): PriorityQueue[A, List[A]]#Bounded =
       new PriorityQueue[A, List[A]] with BoundedContainer[A, List[A]] {
 
         val module = new ListPriorityQueue[A](Some(maximumHeapSize))
 
-        override def insert(item: A)(existing: Structure): (Structure, Option[A]) =
+        override def insert(item: A)(
+            existing: Structure): (Structure, Option[A]) =
           module.insert(item)(existing)
 
-        override def merge(one: Structure, two: Structure): (Structure, Option[Iterable[A]]) =
+        override def merge(one: Structure,
+                           two: Structure): (Structure, Option[Iterable[A]]) =
           module.merge(one, two)
 
         override def delete(item: A)(existing: Structure): Option[Structure] =
@@ -85,7 +88,9 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
   override type Structure = List[A]
 
   val (isMaxSizeDefined, maxSize) = {
-    val ms = maximumHeapSize.map { v => math.max(0, v) }
+    val ms = maximumHeapSize.map { v =>
+      math.max(0, v)
+    }
     (ms.isDefined, ms.getOrElse(-1))
   }
 
@@ -104,17 +109,16 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
     implicitly[Eq[A]].eqv _
 
   /**
-   * Assumptions
-   *  -- Input structure (existing) is in sorted order, ascending.
-   *  -- This is the assumption for all instances of ListPriorityQueue[A]#Structure
-   */
+    * Assumptions
+    *  -- Input structure (existing) is in sorted order, ascending.
+    *  -- This is the assumption for all instances of ListPriorityQueue[A]#Structure
+    */
   override def contains(item: A)(existing: Structure): Boolean =
     binarySearch(item, existing)
 
   @tailrec private def binarySearch(item: A, existing: Structure): Boolean =
     if (existing isEmpty)
       false
-
     else {
 
       val middleIndex = existing.size / 2
@@ -122,7 +126,6 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
 
       if (equality(item, middleItem))
         true
-
       else
         binarySearch(
           item,
@@ -140,7 +143,6 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
   override def insert(item: A)(existing: Structure): (Structure, Option[A]) =
     if (contains(item)(existing))
       (existing, None)
-
     else {
       val newList = (existing :+ item).sortWith(sortFn)
       if (isMaxSizeDefined && newList.size > maxSize) {
@@ -151,10 +153,10 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
         (newList, None)
     }
 
-  override def merge(one: Structure, two: Structure): (Structure, Option[Iterable[A]]) =
+  override def merge(one: Structure,
+                     two: Structure): (Structure, Option[Iterable[A]]) =
     if (one.isEmpty && two.isEmpty)
       (empty, None)
-
     else {
       val (smaller, larger) =
         if (one.size > two.size) (one, two)
@@ -164,10 +166,9 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
     }
 
   override def takeMin(existing: List[A]): Option[(A, Structure)] =
-    existing.headOption
-      .map { head =>
-        (head, existing.slice(1, existing.size))
-      }
+    existing.headOption.map { head =>
+      (head, existing.slice(1, existing.size))
+    }
 
   override def sort(existing: Structure): Iterable[A] =
     existing.sortWith(sortFn)
@@ -181,10 +182,12 @@ private class ListPriorityQueue[A: Cmp: Eq](maximumHeapSize: Option[Int])
   }
 
   /**
-   * ASSUMPTION
-   *  -- Parameter deletedAny has default value false.
-   */
-  private def delete_h(item: A, existing: Structure, deletedAny: Boolean = false): (Structure, Boolean) =
+    * ASSUMPTION
+    *  -- Parameter deletedAny has default value false.
+    */
+  private def delete_h(item: A,
+                       existing: Structure,
+                       deletedAny: Boolean = false): (Structure, Boolean) =
     existing match {
 
       case first :: rest =>

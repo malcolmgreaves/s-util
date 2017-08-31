@@ -52,7 +52,6 @@ case class BinarySearchTree[A: Cmp]()
         None
 
       case f @ Full(left, treeItem, right) =>
-
         cmp.compare(item, treeItem) match {
 
           case Equivalent =>

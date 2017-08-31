@@ -14,9 +14,9 @@ version in ThisBuild := {
 lazy val root = project
   .in(file("."))
   .aggregate(
-  	`s-util-std`
-    ,`s-util-fp`
-    ,`s-util-ds`
+    `s-util-std`,
+    `s-util-fp`,
+    `s-util-ds`
   )
   .settings { noPublish }
 
@@ -33,11 +33,9 @@ lazy val `s-util-fp` =
     }
   }
 
-lazy val `s-util-ds` = project
-  .in(file("s-util-ds"))
-  .dependsOn(`s-util-fp`)
-  .settings {
-    doPublish { 
+lazy val `s-util-ds` =
+  project.in(file("s-util-ds")).dependsOn(`s-util-fp`).settings {
+    doPublish {
       RepoInfo(group = "malcolmgreaves", name = "s-util-ds")
     }
   }

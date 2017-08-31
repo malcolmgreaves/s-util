@@ -15,8 +15,9 @@ trait BoundedContainer[A, S] extends Container[A, S] {
 object BoundedContainer {
 
   def merge[A, S](module: BoundedContainer[A, S])(
-    initial: module.Structure,
-    structures: module.Structure*): (module.Structure, Option[Iterable[A]]) = {
+      initial: module.Structure,
+      structures: module.Structure*)
+    : (module.Structure, Option[Iterable[A]]) = {
 
     val (finalMerged, kickedOut) =
       structures.foldLeft((initial, Seq.empty[A])) {
@@ -40,8 +41,8 @@ object BoundedContainer {
   }
 
   def insert[A, S](module: BoundedContainer[A, S])(
-    existing: module.Structure,
-    elements: A*): (module.Structure, Option[Iterable[A]]) = {
+      existing: module.Structure,
+      elements: A*): (module.Structure, Option[Iterable[A]]) = {
 
     val (newPq, kickedOut) =
       elements.foldLeft((existing, Seq.empty[A])) {
@@ -61,9 +62,8 @@ object BoundedContainer {
     (newPq, if (kickedOut isEmpty) None else Some(kickedOut))
   }
 
-  def insert[A, S](
-    module: BoundedContainer[A, S],
-    elements: A*): (module.Structure, Option[Iterable[A]]) =
+  def insert[A, S](module: BoundedContainer[A, S],
+                   elements: A*): (module.Structure, Option[Iterable[A]]) =
     insert(module)(module.empty, elements: _*)
 
 }

@@ -2,7 +2,7 @@ package fif.ds
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
-import scala.language.{ postfixOps, higherKinds }
+import scala.language.{postfixOps, higherKinds}
 
 abstract class MinHeap[A: Cmp]
     extends SortableContainer[A, TreeParts.Tree[A]]
@@ -26,16 +26,16 @@ abstract class MinHeap[A: Cmp]
       case positiveSize =>
         val buffer = new ArrayBuffer[A](positiveSize)
 
-          @tailrec def drain(current: Structure): Unit =
-            takeMin(current) match {
+        @tailrec def drain(current: Structure): Unit =
+          takeMin(current) match {
 
-              case Some((item, newPq)) =>
-                buffer.append(item)
-                drain(newPq)
+            case Some((item, newPq)) =>
+              buffer.append(item)
+              drain(newPq)
 
-              case None =>
-                ()
-            }
+            case None =>
+              ()
+          }
 
         drain(existing)
         buffer.toIterable
@@ -52,22 +52,24 @@ abstract class MinHeap[A: Cmp]
   import TreeParts._
 
   /**
-   * ASSUMPTION
-   *  -- Parameter deletedAny has default value false.
-   */
-  private def delete_h(item: A, existing: Structure, deletedAny: Boolean = false): (Structure, Boolean) =
+    * ASSUMPTION
+    *  -- Parameter deletedAny has default value false.
+    */
+  private def delete_h(item: A,
+                       existing: Structure,
+                       deletedAny: Boolean = false): (Structure, Boolean) =
     existing match {
 
       case Full(left, heapItem, right) =>
-
         val doDeletion = cmp.compare(item, heapItem) == Equivalent
 
-        val (ltDeleted, ltAnyDeleted) = delete_h(item, left, deletedAny || doDeletion)
-        val (rtDeleted, rtAnyDeleted) = delete_h(item, right, deletedAny || doDeletion)
+        val (ltDeleted, ltAnyDeleted) =
+          delete_h(item, left, deletedAny || doDeletion)
+        val (rtDeleted, rtAnyDeleted) =
+          delete_h(item, right, deletedAny || doDeletion)
 
         if (doDeletion)
           (mergeUnbounded(ltDeleted, rtDeleted), true)
-
         else
           (
             Full(
@@ -75,7 +77,7 @@ abstract class MinHeap[A: Cmp]
               item = heapItem,
               right = rtDeleted
             ),
-              ltAnyDeleted || rtAnyDeleted
+            ltAnyDeleted || rtAnyDeleted
           )
 
       case Empty =>
@@ -161,10 +163,12 @@ object MinHeap {
         override def takeMin(a: Structure): Option[(A, Structure)] =
           module.takeMin(a)
 
-        override def merge(a: Structure, b: Structure): (Structure, Option[Iterable[A]]) =
+        override def merge(a: Structure,
+                           b: Structure): (Structure, Option[Iterable[A]]) =
           module.merge(a, b)
 
-        override def insert(item: A)(existing: Structure): (Structure, Option[A]) =
+        override def insert(item: A)(
+            existing: Structure): (Structure, Option[A]) =
           module.insert(item)(existing)
       }
     }
@@ -202,7 +206,9 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
 
   // we unpack here to use it internally, if applicable
   val (isMaxSizeDefined, maxSize) = {
-    val ms = maximumHeapSize.map { v => math.max(0, v) }
+    val ms = maximumHeapSize.map { v =>
+      math.max(0, v)
+    }
     (ms.isDefined, ms.getOrElse(-1))
   }
 
@@ -221,7 +227,9 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
   override def insert(item: A)(existing: Structure): (Structure, Option[A]) =
     insert_h(item, existing, existing.size)
 
-  private[ds] def insert_h(item: A, existing: Structure, currentSize: Int): (Structure, Option[A]) =
+  private[ds] def insert_h(item: A,
+                           existing: Structure,
+                           currentSize: Int): (Structure, Option[A]) =
     existing match {
 
       case Empty =>
@@ -235,14 +243,15 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
 
           case Less =>
             // item is "more minimum" than heap item: push heap-item down
-            val ((newLeft, newRight), kickedOut) = newLeftAndRight(heapItem, left, right, currentSize)
+            val ((newLeft, newRight), kickedOut) =
+              newLeftAndRight(heapItem, left, right, currentSize)
             (
               Full(
                 left = newLeft,
                 item = item,
                 right = newRight
               ),
-                kickedOut
+              kickedOut
             )
 
           case Greater | Equivalent =>
@@ -254,52 +263,55 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
                 right match {
 
                   case Empty =>
-                    val (newLeft, kickedOut) = insert_h(item, Empty, currentSize)
+                    val (newLeft, kickedOut) =
+                      insert_h(item, Empty, currentSize)
                     (
                       Full(
                         left = newLeft,
                         item = heapItem,
                         right = Empty
                       ),
-                        kickedOut
+                      kickedOut
                     )
 
                   case Full(_, _, _) =>
-                    val (newLeft, kickedOut) = insert_h(item, Empty, currentSize)
+                    val (newLeft, kickedOut) =
+                      insert_h(item, Empty, currentSize)
                     (
                       Full(
                         left = newLeft,
                         item = heapItem,
                         right
                       ),
-                        kickedOut
+                      kickedOut
                     )
                 }
 
               case Full(_, _, _) =>
-
                 right match {
 
                   case Empty =>
-                    val (newRight, kickedOut) = insert_h(item, Empty, currentSize)
+                    val (newRight, kickedOut) =
+                      insert_h(item, Empty, currentSize)
                     (
                       Full(
                         left = left,
                         item = heapItem,
                         right = newRight
                       ),
-                        kickedOut
+                      kickedOut
                     )
 
                   case Full(_, _, _) =>
-                    val ((newLeft, newRight), kickedOut) = newLeftAndRight(item, left, right, currentSize)
+                    val ((newLeft, newRight), kickedOut) =
+                      newLeftAndRight(item, left, right, currentSize)
                     (
                       Full(
                         left = newLeft,
                         item = heapItem,
                         right = newRight
                       ),
-                        kickedOut
+                      kickedOut
                     )
                 }
             }
@@ -307,10 +319,10 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
     }
 
   private def newLeftAndRight(
-    theItem: A,
-    left: Structure,
-    right: Structure,
-    size: Int): ((Structure, Structure), Option[A]) = {
+      theItem: A,
+      left: Structure,
+      right: Structure,
+      size: Int): ((Structure, Structure), Option[A]) = {
     left match {
 
       case Empty =>
@@ -357,7 +369,8 @@ private class MinHeapImplementation[A: Cmp](maximumHeapSize: Option[Int])
       (mergeUnbounded(a, b), None)
 
   // assumes maxSize.isDefined !!!
-  private def mergeBounded(a: Structure, b: Structure): (Structure, Option[Iterable[A]]) = {
+  private def mergeBounded(a: Structure,
+                           b: Structure): (Structure, Option[Iterable[A]]) = {
     val (smaller, larger) =
       if (a.size < b.size)
         (a, b)
@@ -612,4 +625,4 @@ object MinHeap {
         }
 
 }
-*/ 
+ */

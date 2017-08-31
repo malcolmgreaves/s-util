@@ -10,7 +10,7 @@ object ImplicitOptionOps {
       extends AnyVal {
     @inline def toOr: \/[Unit, T] =
       x match {
-        case None        => -\/(())
+        case None => -\/(())
         case Some(value) => \/-(value)
       }
   }

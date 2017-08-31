@@ -21,7 +21,8 @@ object BoundedPriorityQueue {
 
   val doubleOrdering = math.Ordering.Double
 
-  def create[A](O: A => Double)(boundedMaximumSize: Int): BoundedPriorityQueue[A] =
+  def create[A](O: A => Double)(
+      boundedMaximumSize: Int): BoundedPriorityQueue[A] =
     new BoundedPriorityQueue[A] {
 
       sealed trait T {
@@ -61,7 +62,6 @@ object BoundedPriorityQueue {
                 Full(insert_h(heapItem, left, size), item, right)
               else
                 Full(left, item, insert_h(heapItem, right, size))
-
             else // item is either "less minimum" or "the same priority" to the heap item:
             // continue down heap to find appropriate spot
             if (right.size > left.size)
@@ -149,4 +149,3 @@ object BoundedPriorityQueue {
     }
 
 }
-
