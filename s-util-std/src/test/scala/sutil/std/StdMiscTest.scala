@@ -125,7 +125,7 @@ class StdMiscTest extends FunSuite {
 
     outputToFile(new java.io.File("/dev"), "null")(Seq("hello")) match {
       case scala.util.Success(()) => assert(true)
-      case scala.util.Failure(e) => throw e
+      case scala.util.Failure(e)  => throw e
     }
   }
 

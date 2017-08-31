@@ -7,8 +7,9 @@ object SharedBuild {
   // //   Versions  // //
   // // // // // // // //
   
-  lazy val scalazV = "7.2.6"
-  lazy val macroV  = "2.1.0"
+  lazy val scalazV  = "7.2.6"
+  lazy val macroV   = "2.1.0"
+  lazy val algebraV = "0.4.2"
 
   // // // // // // // // // //
   // //    Dependencies   // //
@@ -19,6 +20,10 @@ object SharedBuild {
 
   lazy val fpDeps = Seq(
     "org.scalaz" %% "scalaz-core" % scalazV
+  )
+
+  lazy val dsDeps = Seq(
+    "org.spire-math" %% "algebra" % algebraV
   )
 
   lazy val testDeps = Seq(
